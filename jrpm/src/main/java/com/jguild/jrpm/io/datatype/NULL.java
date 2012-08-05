@@ -1,0 +1,138 @@
+/*
+ *  Copyright 2003 jRPM Team
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.jguild.jrpm.io.datatype;
+
+import com.jguild.jrpm.io.IndexEntry;
+import com.jguild.jrpm.io.constant.RPMIndexType;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * A representation of a rpm null array data object.
+ *
+ * @author kuss
+ * @version $Id: NULL.java,v 1.4 2005/11/11 08:27:40 mkuss Exp $
+ */
+public final class NULL implements DataTypeIf {
+
+    private static final Logger logger = Logger.getGlobal();
+    private Object[] data;
+
+    NULL(final int size) {
+        this.data = new Object[size];
+    }
+
+    /*
+     * @see com.jguild.jrpm.io.datatype.DataTypeIf#isArray()
+     */
+    public boolean isArray() {
+        return true;
+    }
+
+    /**
+     * Get the rpm NULL array as a java object array of null objects
+     *
+     * @return An array of null objects
+     */
+    public Object[] getData() {
+        return this.data;
+    }
+
+    /*
+     * @see com.jguild.jrpm.io.datatype.DataTypeIf#getData()
+     */
+    public Object getDataObject() {
+        return this.data;
+    }
+
+    /*
+     * @see com.jguild.jrpm.io.datatype.DataTypeIf#getSize()
+     */
+    public long getSize() {
+        return 0;
+    }
+
+    /*
+     * @see com.jguild.jrpm.io.datatype.DataTypeIf#getType()
+     */
+    public RPMIndexType getType() {
+        return RPMIndexType.NULL;
+    }
+
+    /**
+     * Constructs a type froma stream
+     *
+     * @param indexEntry The index informations
+     * @return The size of the read data
+     */
+    public static NULL readFromStream(final IndexEntry indexEntry) {
+        if (indexEntry.getType() != RPMIndexType.NULL) {
+            throw new IllegalArgumentException("Type <" + indexEntry.getType()
+                    + "> does not match <" + RPMIndexType.NULL + ">");
+        }
+
+        NULL nullObject = new NULL((int) indexEntry.getCount());
+
+        if (logger.isLoggable(Level.FINER)) {
+            logger.finer(nullObject.toString());
+        }
+
+        // nullObject.size = indexEntry.getType().getSize() *
+        // indexEntry.getCount();
+
+        return nullObject;
+    }
+
+    /*
+     * @see com.jguild.jrpm.io.datatype.DataTypeIf#getElementCount()
+     */
+    public long getElementCount() {
+        return this.data.length;
+    }
+
+    /*
+     * @see com.jguild.jrpm.io.datatype.DataTypeIf#get(int)
+     */
+    public Object get(final int i) {
+        return this.data[i];
+    }
+
+    /*
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+
+        if (this.data.length > 1) {
+            buf.append("[");
+        }
+
+        for (int pos = 0; pos < this.data.length; pos++) {
+            buf.append(this.data[pos]);
+
+            if (pos < (this.data.length - 1)) {
+                buf.append(", ");
+            }
+        }
+
+        if (this.data.length > 1) {
+            buf.append("]");
+        }
+
+        return buf.toString();
+    }
+}
