@@ -11,7 +11,7 @@
  *  limitations under the License
  */
 
-package org.rpmcompartor.data;
+package org.rpmcomparator.service;
 
 import name.fraser.neil.plaintext.diff_match_patch;
 

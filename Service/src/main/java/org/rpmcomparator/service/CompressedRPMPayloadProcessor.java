@@ -17,7 +17,6 @@ import com.google.common.collect.Maps;
 import com.google.common.io.ByteStreams;
 import org.apache.commons.compress.archivers.cpio.CpioArchiveEntry;
 import org.apache.commons.compress.archivers.cpio.CpioArchiveInputStream;
-import org.rpmcompartor.data.MimeLookUp;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -11,7 +11,15 @@
  *  limitations under the License
  */
 
-package org.rpmcompartor.data;
+package org.rpmcomparator.service;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: mohan
+ * Date: 5/08/12
+ * Time: 10:13 PM
+ * To change this template use File | Settings | File Templates.
+ */
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;

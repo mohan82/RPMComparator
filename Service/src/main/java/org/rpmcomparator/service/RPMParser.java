@@ -13,34 +13,12 @@
 
 package org.rpmcomparator.service;
 
-import com.google.common.collect.Maps;
-import com.google.common.io.ByteStreams;
-import com.jguild.jrpm.io.RPMHeader;
-import com.jguild.jrpm.io.RPMLead;
-import com.jguild.jrpm.io.RPMSignature;
-import com.jguild.jrpm.io.Store;
-import org.apache.commons.compress.archivers.cpio.CpioArchiveEntry;
-import org.apache.commons.compress.archivers.cpio.CpioArchiveInputStream;
-import org.apache.commons.compress.archivers.jar.JarArchiveEntry;
-import org.apache.commons.compress.archivers.jar.JarArchiveInputStream;
-import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-import org.rpmcompartor.data.MimeLookUp;
-import org.rpmcompartor.data.RPM;
-import org.rpmcompartor.data.RPMFileHeaderData;
+import org.rpmcomparator.service.data.RPM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tukaani.xz.LZMA2InputStream;
-import org.tukaani.xz.XZInputStream;
 
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.util.Map;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import static org.rpmcomparator.service.ValidatorUtil.getValideFile;
 

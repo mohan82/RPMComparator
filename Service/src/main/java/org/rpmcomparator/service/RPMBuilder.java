@@ -13,13 +13,19 @@
 
 package org.rpmcomparator.service;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import com.google.common.io.Files;
+import com.google.common.io.LineProcessor;
+import com.google.common.io.Resources;
 import com.jguild.jrpm.io.RPMHeader;
 import com.jguild.jrpm.io.RPMLead;
 import com.jguild.jrpm.io.RPMSignature;
 import com.jguild.jrpm.io.Store;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-import org.rpmcompartor.data.RPM;
-import org.rpmcompartor.data.RPMFileHeaderData;
+import org.rpmcomparator.service.data.RPM;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tukaani.xz.LZMA2InputStream;
 import org.tukaani.xz.XZInputStream;
 import  static org.rpmcomparator.service.CompressedRPMPayloadProcessor.*;
@@ -27,6 +33,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
@@ -51,16 +59,16 @@ public class RPMBuilder {
         }
 
         public RPM buildRPMPayload() throws IOException {
-            RPMFileHeaderData fileHeaderData = buildRPMFileHeaderData();
+            RPM.RPMFileHeaderData fileHeaderData = buildRPMFileHeaderData();
             Map<String, ByteBuffer> data = rpmPayloadBuilder.buildPayload();
             return new RPM(fileHeaderData, data);
         }
 
-        protected RPMFileHeaderData buildRPMFileHeaderData() throws IOException {
+        protected RPM.RPMFileHeaderData buildRPMFileHeaderData() throws IOException {
             RPMLead lead = rpmHeaderBuilder.buildRPMLead();
             RPMSignature signature = rpmHeaderBuilder.buildRPMSignature();
             RPMHeader header = rpmHeaderBuilder.buildRPMHeader();
-            return new RPMFileHeaderData(header, lead, signature, store);
+            return new RPM.RPMFileHeaderData(header, lead, signature, store);
         }
 
         public class RPMHeaderBuilder {
@@ -104,4 +112,5 @@ public class RPMBuilder {
                 return new CpioInputStreamProcessor().processStream(compressedStream);
             }
         }
+
 }
