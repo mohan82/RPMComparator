@@ -3,7 +3,7 @@
 *.ipr
 *.iws
 .idea/
-/target/
+target/
 /.settings/
 /nbproject/
 
